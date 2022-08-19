@@ -3,10 +3,7 @@ package org.code.ioc.java.beans;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
+import java.beans.*;
 import java.util.stream.Stream;
 
 public class BeanTest {
@@ -18,7 +15,23 @@ public class BeanTest {
         PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
         Stream.of(propertyDescriptors).forEach(propertyDescriptor -> {
             System.out.println("descriptor:" + propertyDescriptor.toString());
+
+            Class<?> propertyType = propertyDescriptor.getPropertyType();
+            String propertyName = propertyDescriptor.getName();
+
+            if (propertyName.equals("age")) {
+                propertyDescriptor.setPropertyEditorClass(StringToIntPropertyEditor.class);
+                //propertyDescriptor.createPropertyEditor();
+            }
+            
         });
 
+    }
+
+    static class StringToIntPropertyEditor extends PropertyEditorSupport {
+        public void setAsText(String text) throws java.lang.IllegalArgumentException {
+            Integer value = Integer.parseInt(text);
+            setValue(value);
+        }
     }
 }
