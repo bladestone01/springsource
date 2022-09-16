@@ -16,6 +16,7 @@
         <property name="id" value="1"/>
         <property name="name" value="小马哥"/>
         <property name="age" value="13"/>
+        <property name="city" value="HANGZHOU"/>
     </bean>
 
     <bean id="objectFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
